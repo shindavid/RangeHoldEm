@@ -1416,6 +1416,11 @@
   "resolved" "https://registry.npmjs.org/@types/uuid/-/uuid-8.3.4.tgz"
   "version" "8.3.4"
 
+"@types/validator@^13.7.10":
+  "integrity" "sha512-YVtyAPqpefU+Mm/qqnOANW6IkqKpCSrarcyV269C8MA8Ux0dbkEuQwM/4CjL47kVEM2LgBef/ETfkH+c6+moFA=="
+  "resolved" "https://registry.npmjs.org/@types/validator/-/validator-13.7.12.tgz"
+  "version" "13.7.12"
+
 "@types/yargs-parser@*":
   "integrity" "sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA=="
   "resolved" "https://registry.npmjs.org/@types/yargs-parser/-/yargs-parser-21.0.0.tgz"
@@ -2173,12 +2178,13 @@
   "resolved" "https://registry.npmjs.org/class-transformer/-/class-transformer-0.5.1.tgz"
   "version" "0.5.1"
 
-"class-validator@*", "class-validator@^0.13.2":
-  "integrity" "sha512-yBUcQy07FPlGzUjoLuUfIOXzgynnQPPruyK1Ge2B74k9ROwnle1E+NxLWnUv5OLU8hA/qL5leAE9XnXq3byaBw=="
-  "resolved" "https://registry.npmjs.org/class-validator/-/class-validator-0.13.2.tgz"
-  "version" "0.13.2"
+"class-validator@*", "class-validator@^0.14.0":
+  "integrity" "sha512-ct3ltplN8I9fOwUd8GrP8UQixwff129BkEtuWDKL5W45cQuLd19xqmTLu5ge78YDm/fdje6FMt0hGOhl0lii3A=="
+  "resolved" "https://registry.npmjs.org/class-validator/-/class-validator-0.14.0.tgz"
+  "version" "0.14.0"
   dependencies:
-    "libphonenumber-js" "^1.9.43"
+    "@types/validator" "^13.7.10"
+    "libphonenumber-js" "^1.10.14"
     "validator" "^13.7.0"
 
 "cli-cursor@^3.1.0":
@@ -4388,10 +4394,10 @@
     "prelude-ls" "^1.2.1"
     "type-check" "~0.4.0"
 
-"libphonenumber-js@^1.9.43":
-  "integrity" "sha512-9QWxEk4GW5RDnFzt8UtyRENfFpAN8u7Sbf9wf32tcXY9tdtnz1dKHIBwW2Wnfx8ypXJb9zUnTpK9aQJ/B8AlnA=="
-  "resolved" "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.10.4.tgz"
-  "version" "1.10.4"
+"libphonenumber-js@^1.10.14":
+  "integrity" "sha512-/udZhx49av2r2gZR/+xXSrwcR8smX/sDNrVpOFrvW+CA26TfYTVZfwb3MIDvmwAYMLs7pXuJjZX0VxxGpqPhsA=="
+  "resolved" "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.10.21.tgz"
+  "version" "1.10.21"
 
 "lilconfig@^2.0.5":
   "integrity" "sha512-xaYmXZtTHPAw5m+xLN8ab9C+3a8YmV3asNSPOATITbtwrfbwaLJj8h66H1WMIpALCkqsIzK3h7oQ+PdX+LQ9Eg=="

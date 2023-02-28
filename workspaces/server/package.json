@@ -1,5 +1,5 @@
 {
-  "name": "@memory-cards/server",
+  "name": "@range-holdem/server",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@memory-cards/shared": "*",
+    "@range-holdem/shared": "*",
     "@nestjs/common": "^8.0.0",
     "@nestjs/config": "^2.0.1",
     "@nestjs/core": "^8.0.0",

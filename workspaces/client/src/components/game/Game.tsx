@@ -1,4 +1,4 @@
-import { ClientEvents } from '@memory-cards/shared/client/ClientEvents';
+import { ClientEvents } from '@range-holdem/shared/client/ClientEvents';
 import useSocketManager from '@hooks/useSocketManager';
 import { useRecoilValue } from 'recoil';
 import { CurrentLobbyState } from '@components/game/states';

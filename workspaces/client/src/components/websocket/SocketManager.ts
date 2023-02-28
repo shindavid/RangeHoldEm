@@ -1,8 +1,8 @@
 import { SocketState } from '@components/websocket/SocketState';
 import { Listener } from '@components/websocket/types';
-import { ClientEvents } from '@memory-cards/shared/client/ClientEvents';
-import { ServerEvents } from '@memory-cards/shared/server/ServerEvents';
-import { ServerExceptionResponse } from '@memory-cards/shared/server/types';
+import { ClientEvents } from '@range-holdem/shared/client/ClientEvents';
+import { ServerEvents } from '@range-holdem/shared/server/ServerEvents';
+import { ServerExceptionResponse } from '@range-holdem/shared/server/types';
 import { SetterOrUpdater } from 'recoil';
 import { io, Socket } from 'socket.io-client';
 import { showNotification } from '@mantine/notifications';

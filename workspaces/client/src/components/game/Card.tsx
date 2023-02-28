@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { CardStateDefinition } from '@memory-cards/shared/common/types';
+import { CardStateDefinition } from '@range-holdem/shared/common/types';
 import { CardsMap } from '@icons/cards/CardsMap';
 
 type Props = {

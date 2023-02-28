@@ -1,8 +1,8 @@
 import useSocketManager from '@hooks/useSocketManager';
 import { useEffect } from 'react';
 import { Listener } from '@components/websocket/types';
-import { ServerEvents } from '@memory-cards/shared/server/ServerEvents';
-import { ServerPayloads } from '@memory-cards/shared/server/ServerPayloads';
+import { ServerEvents } from '@range-holdem/shared/server/ServerEvents';
+import { ServerPayloads } from '@range-holdem/shared/server/ServerPayloads';
 import { useRecoilState } from 'recoil';
 import { CurrentLobbyState } from '@components/game/states';
 import Introduction from '@components/game/Introduction';

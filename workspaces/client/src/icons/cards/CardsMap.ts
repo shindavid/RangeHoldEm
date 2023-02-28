@@ -1,4 +1,4 @@
-import { Cards } from '@memory-cards/shared/common/Cards';
+import { Cards } from '@range-holdem/shared/common/Cards';
 import {
   Back,
   Clover10,

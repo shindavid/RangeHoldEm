@@ -14,7 +14,7 @@ export default function Header() {
       <Link href="/">
         <a onClick={clearGame}>
           <h1 className="text-4xl font-bold flex space-x-2">
-            <span>Memory Cards</span>
+            <span>Range Hold&apos;em</span>
             <div>
               <Image
                 src={Cards}

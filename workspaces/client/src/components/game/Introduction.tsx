@@ -8,7 +8,7 @@ import { Divider, Select } from '@mantine/core';
 export default function Introduction() {
   const router = useRouter();
   const {sm} = useSocketManager();
-  const [delayBetweenRounds, setDelayBetweenRounds] = useState<number>(2);
+  const [gameVariant, setGameVariant] = useState('FLHE');
 
   useEffect(() => {
     if (router.query.lobby) {
@@ -21,12 +21,12 @@ export default function Introduction() {
     }
   }, [router]);
 
-  const onCreateLobby = (mode: 'solo' | 'duo') => {
+  const onCreateLobby = () => {
     sm.emit({
       event: ClientEvents.LobbyCreate,
       data: {
         mode: mode,
-        delayBetweenRounds: delayBetweenRounds,
+        gameVariant: gameVariant,
       },
     });
 
@@ -35,16 +35,11 @@ export default function Introduction() {
 
   return (
     <div className="mt-4">
-      <h2 className="text-2xl">Hello ! 👋</h2>
-
       <p className="mt-3 text-lg">
-        Welcome to a simple game to test your memory against other players or yourself (solo mode).
-        <br/>
-        Reveal cards by clicking on them, you can reveal two card per round, your opponent too.
-        <br/>
-        Once you revealed cards, if they match then you gain a point. You&apos;ll also see the cards revealed by your opponent.
-        <br/>
-        Game is over once all cards are revealed. Player with most points wins!
+        You are about to play a special variant of Texas Hold&apos;em.<br/>
+        Instead of getting dealt two specific cards, you will play with <i>all</i> possible two-card combinations <i>simultaneously</i>.<br/>
+        At each action point, the dealer will accept as input your actions for your entire range, and randomly sample your action based on it.<br/>
+        At the end of each hand, the dealer awards you your share of the pot based on the entire range of hands you (and your opponent) have.
       </p>
 
       <Divider my="md"/>
@@ -53,22 +48,18 @@ export default function Introduction() {
         <h3 className="text-xl">Game options</h3>
 
         <Select
-          label="Delay between rounds"
-          defaultValue="2"
-          onChange={(delay) => setDelayBetweenRounds(+delay!)}
+          label="Game Variant"
+          defaultValue="FLHE"
+          onChange={(variant) => setGameVariant(variant)}
           data={[
-            {value: '1', label: '1 second'},
-            {value: '2', label: '2 seconds'},
-            {value: '3', label: '3 seconds'},
-            {value: '4', label: '4 seconds'},
-            {value: '5', label: '5 seconds'},
+            {value: 'FLHE', label: 'Fixed-Limit Holdem'},
+            {value: 'NLHE-100', label: 'No-Limit Holdem, 100BB stacks (not yet supported)', disabled: true},
           ]}
         />
       </div>
 
       <div className="mt-5 text-center flex justify-between">
-        <button className="btn" onClick={() => onCreateLobby('solo')}>Create solo lobby</button>
-        <button className="btn" onClick={() => onCreateLobby('duo')}>Create duo lobby</button>
+        <button className="btn" onClick={() => onCreateLobby()}>Begin</button>
       </div>
     </div>
   );

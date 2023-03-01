@@ -59,6 +59,8 @@ export class Lobby
       lobbyId: this.id,
       variant: this.instance.variant,
       numSeats: this.instance.numSeats,
+      bigBlind: this.instance.bigBlind,
+      stackSizeBB: this.instance.stackSizeBB,
       hasStarted: this.instance.hasStarted,
       hasFinished: this.instance.hasFinished,
       currentRound: this.instance.currentRound,

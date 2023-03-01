@@ -3,11 +3,13 @@ import { ClientEvents } from '@range-holdem/shared/client/ClientEvents';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { emitEvent } from '@utils/analytics';
-import { Divider, Select } from '@mantine/core';
+import { createStyles, Divider, NumberInput, Select, SimpleGrid } from '@mantine/core';
 
 export default function Introduction() {
   const router = useRouter();
   const {sm} = useSocketManager();
+  const [bigBlind, setBigBlind] = useState<number>(10);
+  const [stackSizeBB, setStackSizeBB] = useState<number>(100);
   const [numSeats, setNumSeats] = useState<number>(2);
   const [variant, setVariant] = useState<string>('FLHE');
 
@@ -28,11 +30,27 @@ export default function Introduction() {
       data: {
         numSeats: numSeats,
         variant: variant,
+        bigBlind: bigBlind,
+        stackSizeBB: stackSizeBB,
       },
     });
 
     emitEvent('lobby_create');
   };
+
+  const useStyles = createStyles((theme) => ({
+    invalid: {
+      backgroundColor:
+        theme.colorScheme === 'dark' ? theme.fn.rgba(theme.colors.red[8], 0.15) : theme.colors.red[0],
+    },
+
+    icon: {
+      color: theme.colors.red[theme.colorScheme === 'dark' ? 7 : 6],
+    },
+  }));
+
+  const { classes } = useStyles();
+  const gridBreakpoints = [{ maxWidth: 'md', cols: 2 }, { maxWidth: 'sm', cols: 1 }];
 
   return (
     <div className="mt-4">
@@ -47,27 +65,50 @@ export default function Introduction() {
 
       <div>
         <h3 className="text-xl">Game options</h3>
+        <br/>
 
-        <Select
-          label="Num Players"
-          defaultValue="2"
-          onChange={(numSeats) => setNumSeats(+numSeats!)}
-          data={[
-            {value: '2', label: '2'},
-            {value: '6', label: '6 (not yet supported)', disabled: true},
-            {value: '9', label: '9 (not yet supported)', disabled: true},
-          ]}
-        />
+        <SimpleGrid cols={2} breakpoints={gridBreakpoints}>
+          <NumberInput
+            mt="sm"
+            label="Big Blind"
+            defaultValue={10}
+            min={2}
+            max={1000}
+            step={2}
+            onChange={(value) => setBigBlind(+value!)}
+          />
 
-        <Select
-          label="Game Variant"
-          defaultValue="FLHE"
-          onChange={(variant) => setVariant(variant!)}
-          data={[
-            {value: 'FLHE', label: 'Fixed-Limit Holdem'},
-            {value: 'NLHE', label: 'No-Limit Holdem (not yet supported)', disabled: true},
-          ]}
-        />
+          <NumberInput
+            mt="sm"
+            label="Stack Size in BB"
+            defaultValue={100}
+            min={1}
+            max={10000}
+            step={1}
+            onChange={(value) => setStackSizeBB(+value!)}
+          />
+
+          <Select
+            label="Num Players"
+            defaultValue="2"
+            onChange={(numSeats) => setNumSeats(+numSeats!)}
+            data={[
+              {value: '2', label: '2'},
+              {value: '6', label: '6 (not yet supported)', disabled: true},
+              {value: '9', label: '9 (not yet supported)', disabled: true},
+            ]}
+          />
+
+          <Select
+            label="Game Variant"
+            defaultValue="FLHE"
+            onChange={(variant) => setVariant(variant!)}
+            data={[
+              {value: 'FLHE', label: 'Fixed-Limit Holdem'},
+              {value: 'NLHE', label: 'No-Limit Holdem (not yet supported)', disabled: true},
+            ]}
+          />
+        </SimpleGrid>
       </div>
 
       <div className="mt-5 text-center flex justify-between">

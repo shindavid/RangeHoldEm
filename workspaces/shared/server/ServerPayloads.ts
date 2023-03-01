@@ -6,6 +6,8 @@ export type ServerPayloads = {
     lobbyId: string;
     variant: string;
     numSeats: number;
+    bigBlind: number;
+    stackSizeBB: number;
     hasStarted: boolean;
     hasFinished: boolean;
     currentRound: number;

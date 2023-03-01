@@ -27,6 +27,10 @@ export class Instance
 
   public numSeats: number = 2;
 
+  public bigBlind: number = 10;
+
+  public stackSizeBB: number = 100;
+
   private cardsRevealedForCurrentRound: Record<number, Socket['id']> = {};
 
   constructor(

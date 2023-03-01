@@ -25,23 +25,11 @@ export class LobbyManager
     client.data.lobby?.removeClient(client);
   }
 
-  public createLobby(mode: LobbyMode, delayBetweenRounds: number): Lobby
+  public createLobby(): Lobby
   {
-    let maxClients = 2;
-
-    switch (mode) {
-      case 'solo':
-        maxClients = 1;
-        break;
-
-      case 'duo':
-        maxClients = 2;
-        break;
-    }
+    let maxClients = 1;
 
     const lobby = new Lobby(this.server, maxClients);
-
-    lobby.instance.delayBetweenRounds = delayBetweenRounds;
 
     this.lobbies.set(lobby.id, lobby);
 

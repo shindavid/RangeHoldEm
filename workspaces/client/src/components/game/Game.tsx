@@ -51,8 +51,8 @@ export default function Game() {
     sm.emit({
       event: ClientEvents.LobbyCreate,
       data: {
-        mode: currentLobbyState.mode,
-        delayBetweenRounds: currentLobbyState.delayBetweenRounds,
+        numSeats: currentLobbyState.numSeats,
+        variant: currentLobbyState.variant,
       },
     });
 
@@ -72,6 +72,10 @@ export default function Game() {
   return (
     <div>
       <div className="flex justify-between items-center my-5">
+        <Badge size="xl">Variant: {currentLobbyState.variant}</Badge>
+        <Badge size="xl">Num Seats: {currentLobbyState.numSeats}</Badge>
+      </div>
+      <div className="flex justify-between items-center my-5">
         <Badge size="xl">Your score: {clientScore}</Badge>
         <Badge variant="outline">
           {!currentLobbyState.hasStarted
@@ -80,7 +84,7 @@ export default function Game() {
           }
         </Badge>
 
-        {currentLobbyState.mode === 'duo' && <Badge size="xl" color="red">Opponent score: {opponentScore}</Badge>}
+        {false && <Badge size="xl" color="red">Opponent score: {opponentScore}</Badge>}
       </div>
 
       {currentLobbyState.isSuspended && (

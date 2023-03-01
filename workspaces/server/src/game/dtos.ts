@@ -4,12 +4,12 @@ import { Cards } from '@shared/common/Cards';
 export class LobbyCreateDto
 {
   @IsString()
-  mode: 'solo' | 'duo';
+  variant: 'FLHE';
 
   @IsInt()
-  @Min(1)
-  @Max(5)
-  delayBetweenRounds: number;
+  @Min(2)
+  @Max(9)
+  numSeats: number;
 }
 
 export class LobbyJoinDto

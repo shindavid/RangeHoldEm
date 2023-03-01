@@ -61,7 +61,8 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   @SubscribeMessage(ClientEvents.LobbyCreate)
   onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto): WsResponse<ServerPayloads[ServerEvents.GameMessage]>
   {
-    const lobby = this.lobbyManager.createLobby(data.mode, data.delayBetweenRounds);
+    // TODO: use data.variant, data.numSeats
+    const lobby = this.lobbyManager.createLobby();
     lobby.addClient(client);
 
     return {

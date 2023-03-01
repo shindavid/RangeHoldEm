@@ -4,8 +4,8 @@ import { CardStateDefinition } from '../common/types';
 export type ServerPayloads = {
   [ServerEvents.LobbyState]: {
     lobbyId: string;
-    mode: 'solo' | 'duo';
-    delayBetweenRounds: number;
+    variant: string;
+    numSeats: number;
     hasStarted: boolean;
     hasFinished: boolean;
     currentRound: number;

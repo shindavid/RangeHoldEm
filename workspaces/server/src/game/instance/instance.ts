@@ -23,7 +23,9 @@ export class Instance
 
   public scores: Record<Socket['id'], number> = {};
 
-  public delayBetweenRounds: number = 2;
+  public variant: string = 'FLHE';
+
+  public numSeats: number = 2;
 
   private cardsRevealedForCurrentRound: Record<number, Socket['id']> = {};
 
@@ -177,7 +179,7 @@ export class Instance
       }
 
       this.lobby.dispatchLobbyState();
-    }, SECOND * this.delayBetweenRounds);
+    }, SECOND * 2);  // 2 seconds between rounds
   }
 
   private initializeCards(): void

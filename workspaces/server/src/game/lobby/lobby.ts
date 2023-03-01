@@ -57,8 +57,8 @@ export class Lobby
   {
     const payload: ServerPayloads[ServerEvents.LobbyState] = {
       lobbyId: this.id,
-      mode: this.maxClients === 1 ? 'solo' : 'duo',
-      delayBetweenRounds: this.instance.delayBetweenRounds,
+      variant: this.instance.variant,
+      numSeats: this.instance.numSeats,
       hasStarted: this.instance.hasStarted,
       hasFinished: this.instance.hasFinished,
       currentRound: this.instance.currentRound,

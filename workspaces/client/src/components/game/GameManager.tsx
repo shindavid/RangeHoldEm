@@ -4,7 +4,7 @@ import { Listener } from '@components/websocket/types';
 import { ServerEvents } from '@range-holdem/shared/server/ServerEvents';
 import { ServerPayloads } from '@range-holdem/shared/server/ServerPayloads';
 import { useRecoilState } from 'recoil';
-import { CurrentLobbyState } from '@components/game/states';
+import { CurrentTableState } from '@components/game/states';
 import Introduction from '@components/game/Introduction';
 import Game from '@components/game/Game';
 import { useRouter } from 'next/router';
@@ -13,15 +13,15 @@ import { showNotification } from '@mantine/notifications';
 export default function GameManager() {
   const router = useRouter();
   const {sm} = useSocketManager();
-  const [lobbyState, setLobbyState] = useRecoilState(CurrentLobbyState);
+  const [tableState, setTableState] = useRecoilState(CurrentTableState);
 
   useEffect(() => {
     sm.connect();
 
-    const onLobbyState: Listener<ServerPayloads[ServerEvents.LobbyState]> = async (data) => {
-      setLobbyState(data);
+    const onTableState: Listener<ServerPayloads[ServerEvents.TableState]> = async (data) => {
+      setTableState(data);
 
-      router.query.lobby = data.lobbyId;
+      router.query.table = data.tableId;
 
       await router.push({
         pathname: '/',
@@ -37,16 +37,16 @@ export default function GameManager() {
       });
     };
 
-    sm.registerListener(ServerEvents.LobbyState, onLobbyState);
+    sm.registerListener(ServerEvents.TableState, onTableState);
     sm.registerListener(ServerEvents.GameMessage, onGameMessage);
 
     return () => {
-      sm.removeListener(ServerEvents.LobbyState, onLobbyState);
+      sm.removeListener(ServerEvents.TableState, onTableState);
       sm.removeListener(ServerEvents.GameMessage, onGameMessage);
     };
   }, []);
 
-  if (lobbyState === null) {
+  if (tableState === null) {
     return <Introduction/>;
   }
 

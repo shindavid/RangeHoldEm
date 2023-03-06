@@ -2,8 +2,8 @@ import { ServerEvents } from './ServerEvents';
 import { CardStateDefinition } from '../common/types';
 
 export type ServerPayloads = {
-  [ServerEvents.LobbyState]: {
-    lobbyId: string;
+  [ServerEvents.TableState]: {
+    tableId: string;
     variant: string;
     numSeats: number;
     bigBlind: number;

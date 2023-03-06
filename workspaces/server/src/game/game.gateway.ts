@@ -9,13 +9,13 @@ import {
 import { Server, Socket } from 'socket.io';
 import { ClientEvents } from '@shared/client/ClientEvents';
 import { ServerEvents } from '@shared/server/ServerEvents';
-import { LobbyManager } from '@app/game/lobby/lobby.manager';
+import { TableManager } from '@app/game/table/table.manager';
 import { Logger, UsePipes } from '@nestjs/common';
 import { AuthenticatedSocket } from '@app/game/types';
 import { ServerException } from '@app/game/server.exception';
 import { SocketExceptions } from '@shared/server/SocketExceptions';
 import { ServerPayloads } from '@shared/server/ServerPayloads';
-import { LobbyCreateDto, LobbyJoinDto, RevealCardDto } from '@app/game/dtos';
+import { TableCreateDto, TableJoinDto, RevealCardDto } from '@app/game/dtos';
 import { WsValidationPipe } from '@app/websocket/ws.validation-pipe';
 
 @UsePipes(new WsValidationPipe())
@@ -25,7 +25,7 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   private readonly logger: Logger = new Logger(GameGateway.name);
 
   constructor(
-    private readonly lobbyManager: LobbyManager,
+    private readonly tableManager: TableManager,
   )
   {
   }
@@ -33,7 +33,7 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   afterInit(server: Server): any
   {
     // Pass server instance to managers
-    this.lobbyManager.server = server;
+    this.tableManager.server = server;
 
     this.logger.log('Game server initialized !');
   }
@@ -41,13 +41,13 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
   async handleConnection(client: Socket, ...args: any[]): Promise<void>
   {
     // Call initializers to set up socket
-    this.lobbyManager.initializeSocket(client as AuthenticatedSocket);
+    this.tableManager.initializeSocket(client as AuthenticatedSocket);
   }
 
   async handleDisconnect(client: AuthenticatedSocket): Promise<void>
   {
     // Handle termination of socket
-    this.lobbyManager.terminateSocket(client);
+    this.tableManager.terminateSocket(client);
   }
 
   @SubscribeMessage(ClientEvents.Ping)
@@ -58,41 +58,41 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     });
   }
 
-  @SubscribeMessage(ClientEvents.LobbyCreate)
-  onLobbyCreate(client: AuthenticatedSocket, data: LobbyCreateDto): WsResponse<ServerPayloads[ServerEvents.GameMessage]>
+  @SubscribeMessage(ClientEvents.TableCreate)
+  onTableCreate(client: AuthenticatedSocket, data: TableCreateDto): WsResponse<ServerPayloads[ServerEvents.GameMessage]>
   {
     // TODO: use data.variant, data.numSeats
-    const lobby = this.lobbyManager.createLobby();
-    lobby.addClient(client);
+    const table = this.tableManager.createTable();
+    table.addClient(client);
 
     return {
       event: ServerEvents.GameMessage,
       data: {
         color: 'green',
-        message: 'Lobby created',
+        message: 'Table created',
       },
     };
   }
 
-  @SubscribeMessage(ClientEvents.LobbyJoin)
-  onLobbyJoin(client: AuthenticatedSocket, data: LobbyJoinDto): void
+  @SubscribeMessage(ClientEvents.TableJoin)
+  onTableJoin(client: AuthenticatedSocket, data: TableJoinDto): void
   {
-    this.lobbyManager.joinLobby(data.lobbyId, client);
+    this.tableManager.joinTable(data.tableId, client);
   }
 
-  @SubscribeMessage(ClientEvents.LobbyLeave)
-  onLobbyLeave(client: AuthenticatedSocket): void
+  @SubscribeMessage(ClientEvents.TableLeave)
+  onTableLeave(client: AuthenticatedSocket): void
   {
-    client.data.lobby?.removeClient(client);
+    client.data.table?.removeClient(client);
   }
 
   @SubscribeMessage(ClientEvents.GameRevealCard)
   onRevealCard(client: AuthenticatedSocket, data: RevealCardDto): void
   {
-    if (!client.data.lobby) {
-      throw new ServerException(SocketExceptions.LobbyError, 'You are not in a lobby');
+    if (!client.data.table) {
+      throw new ServerException(SocketExceptions.TableError, 'You are not in a table');
     }
 
-    client.data.lobby.instance.revealCard(data.cardIndex, client);
+    client.data.table.instance.revealCard(data.cardIndex, client);
   }
 }

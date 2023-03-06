@@ -14,19 +14,19 @@ export default function Introduction() {
   const [variant, setVariant] = useState<string>('FLHE');
 
   useEffect(() => {
-    if (router.query.lobby) {
+    if (router.query.table) {
       sm.emit({
-        event: ClientEvents.LobbyJoin,
+        event: ClientEvents.TableJoin,
         data: {
-          lobbyId: router.query.lobby,
+          tableId: router.query.table,
         },
       });
     }
   }, [router]);
 
-  const onCreateLobby = () => {
+  const onCreateTable = () => {
     sm.emit({
-      event: ClientEvents.LobbyCreate,
+      event: ClientEvents.TableCreate,
       data: {
         numSeats: numSeats,
         variant: variant,
@@ -35,7 +35,7 @@ export default function Introduction() {
       },
     });
 
-    emitEvent('lobby_create');
+    emitEvent('table_create');
   };
 
   const useStyles = createStyles((theme) => ({
@@ -112,7 +112,7 @@ export default function Introduction() {
       </div>
 
       <div className="mt-5 text-center flex justify-between">
-        <button className="btn" onClick={() => onCreateLobby()}>Begin</button>
+        <button className="btn" onClick={() => onCreateTable()}>Begin</button>
       </div>
     </div>
   );

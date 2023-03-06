@@ -1,5 +1,5 @@
 import { Cards } from '@shared/common/Cards';
-import { Lobby } from '@app/game/lobby/lobby';
+import { Table } from '@app/game/table/table';
 import { CardState } from '@app/game/instance/card-state';
 import { ServerException } from '@app/game/server.exception';
 import { SocketExceptions } from '@shared/server/SocketExceptions';
@@ -34,7 +34,7 @@ export class Instance
   private cardsRevealedForCurrentRound: Record<number, Socket['id']> = {};
 
   constructor(
-    private readonly lobby: Lobby,
+    private readonly table: Table,
   )
   {
     this.initializeCards();
@@ -48,7 +48,7 @@ export class Instance
 
     this.hasStarted = true;
 
-    this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+    this.table.dispatchToTable<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
       color: 'blue',
       message: 'Game started !',
     });
@@ -62,7 +62,7 @@ export class Instance
 
     this.hasFinished = true;
 
-    this.lobby.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+    this.table.dispatchToTable<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
       color: 'blue',
       message: 'Game finished !',
     });
@@ -110,7 +110,7 @@ export class Instance
     });
 
     // If everyone played (revealed 2 cards) then go to next round
-    const everyonePlayed = Object.values(this.cardsRevealedForCurrentRound).length === this.lobby.clients.size * 2;
+    const everyonePlayed = Object.values(this.cardsRevealedForCurrentRound).length === this.table.clients.size * 2;
 
     // If every card have been revealed then go to next round
     let everyCardRevealed = true;
@@ -127,7 +127,7 @@ export class Instance
       this.transitionToNextRound();
     }
 
-    this.lobby.dispatchLobbyState();
+    this.table.dispatchTableState();
   }
 
   private transitionToNextRound(): void
@@ -182,7 +182,7 @@ export class Instance
         this.triggerFinish();
       }
 
-      this.lobby.dispatchLobbyState();
+      this.table.dispatchTableState();
     }, SECOND * 2);  // 2 seconds between rounds
   }
 

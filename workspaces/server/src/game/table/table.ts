@@ -5,7 +5,7 @@ import { AuthenticatedSocket } from '@app/game/types';
 import { Instance } from '@app/game/instance/instance';
 import { ServerPayloads } from '@shared/server/ServerPayloads';
 
-export class Lobby
+export class Table
 {
   public readonly id: string = v4();
 
@@ -26,37 +26,37 @@ export class Lobby
   {
     this.clients.set(client.id, client);
     client.join(this.id);
-    client.data.lobby = this;
+    client.data.table = this;
 
     if (this.clients.size >= this.maxClients) {
       this.instance.triggerStart();
     }
 
-    this.dispatchLobbyState();
+    this.dispatchTableState();
   }
 
   public removeClient(client: AuthenticatedSocket): void
   {
     this.clients.delete(client.id);
     client.leave(this.id);
-    client.data.lobby = null;
+    client.data.table = null;
 
     // If player leave then the game isn't worth to play anymore
     this.instance.triggerFinish();
 
-    // Alert the remaining player that client left lobby
-    this.dispatchToLobby<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
+    // Alert the remaining player that client left table
+    this.dispatchToTable<ServerPayloads[ServerEvents.GameMessage]>(ServerEvents.GameMessage, {
       color: 'blue',
-      message: 'Opponent left lobby',
+      message: 'Opponent left table',
     });
 
-    this.dispatchLobbyState();
+    this.dispatchTableState();
   }
 
-  public dispatchLobbyState(): void
+  public dispatchTableState(): void
   {
-    const payload: ServerPayloads[ServerEvents.LobbyState] = {
-      lobbyId: this.id,
+    const payload: ServerPayloads[ServerEvents.TableState] = {
+      tableId: this.id,
       variant: this.instance.variant,
       numSeats: this.instance.numSeats,
       bigBlind: this.instance.bigBlind,
@@ -70,10 +70,10 @@ export class Lobby
       scores: this.instance.scores,
     };
 
-    this.dispatchToLobby(ServerEvents.LobbyState, payload);
+    this.dispatchToTable(ServerEvents.TableState, payload);
   }
 
-  public dispatchToLobby<T>(event: ServerEvents, payload: T): void
+  public dispatchToTable<T>(event: ServerEvents, payload: T): void
   {
     this.server.to(this.id).emit(event, payload);
   }

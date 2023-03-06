@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { GameGateway } from './game.gateway';
-import { LobbyManager } from '@app/game/lobby/lobby.manager';
+import { TableManager } from '@app/game/table/table.manager';
 
 @Module({
   providers: [
@@ -8,7 +8,7 @@ import { LobbyManager } from '@app/game/lobby/lobby.manager';
     GameGateway,
 
     // Managers
-    LobbyManager,
+    TableManager,
   ],
 })
 export class GameModule

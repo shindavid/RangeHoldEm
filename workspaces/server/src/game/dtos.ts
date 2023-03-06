@@ -1,7 +1,7 @@
 import { IsDivisibleBy, IsInt, IsNumber, IsString, Max, Min } from 'class-validator';
 import { Cards } from '@shared/common/Cards';
 
-export class LobbyCreateDto
+export class TableCreateDto
 {
   @IsString()
   variant: 'FLHE';
@@ -23,10 +23,10 @@ export class LobbyCreateDto
   stackSizeBB: number;
 }
 
-export class LobbyJoinDto
+export class TableJoinDto
 {
   @IsString()
-  lobbyId: string;
+  tableId: string;
 }
 
 export class RevealCardDto

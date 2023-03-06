@@ -4,8 +4,8 @@ export enum SocketExceptions
   UnexpectedError = 'exception.unexpected_error',
   UnexpectedPayload = 'exception.unexpected_payload',
 
-  // Lobby
-  LobbyError = 'exception.lobby.error',
+  // Table
+  TableError = 'exception.table.error',
 
   // Game
   GameError = 'exception.game.error',

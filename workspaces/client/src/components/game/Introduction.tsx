@@ -89,7 +89,7 @@ export default function Introduction() {
           />
 
           <Select
-            label="Num Players"
+            label="Num Seats"
             defaultValue="2"
             onChange={(numSeats) => setNumSeats(+numSeats!)}
             data={[

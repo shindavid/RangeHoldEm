@@ -27,7 +27,7 @@ export default function _App(props: AppProps) {
   return (
     <RecoilRoot>
       <Head>
-        <title>Memory Cards</title>
+        <title>Range Hold'em</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width"/>
         <meta name="description" content="Memory cards game"/>
         <link rel="icon" href="/cards.svg"/>
